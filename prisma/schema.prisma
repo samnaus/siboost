@@ -1,0 +1,142 @@
+generator client {
+  provider      = "prisma-client-js"
+  binaryTargets = ["native", "debian-openssl-3.0.x"]
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Enquiry {
+  id                    String   @id @default(cuid())
+  type                  String
+  name                  String
+  email                 String
+  phone                 String?
+  businessName          String?
+  websiteUrl            String?
+  packageInterest       String?
+  subscriptionInterest  String?
+  message               String
+  consent               Boolean
+  status                String   @default("new")
+  notes                 String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+
+  @@index([createdAt])
+  @@index([email])
+}
+
+model ReadinessCheck {
+  id           String   @id @default(cuid())
+  websiteUrl   String
+  businessName String
+  contactName  String
+  email        String
+  consent      Boolean
+  status       String   @default("received")
+  notes        String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([createdAt])
+  @@index([email])
+}
+
+model Customer {
+  id               String         @id @default(cuid())
+  email            String         @unique
+  name             String?
+  businessName     String?
+  websiteUrl       String?
+  stripeCustomerId String?        @unique
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
+  purchases        Purchase[]
+  subscriptions    Subscription[]
+}
+
+model Purchase {
+  id                      String   @id @default(cuid())
+  customerId              String
+  customer                Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  productKey              String
+  productName             String
+  amountExGstCents        Int
+  gstCents                Int
+  amountIncGstCents       Int
+  currency                String   @default("nzd")
+  status                  String
+  stripeCheckoutSessionId String?
+  stripePaymentIntentId   String?
+  createdAt               DateTime @default(now())
+  updatedAt               DateTime @updatedAt
+
+  @@unique([stripeCheckoutSessionId, productKey])
+  @@index([customerId])
+  @@index([createdAt])
+}
+
+model Subscription {
+  id                      String    @id @default(cuid())
+  customerId              String
+  customer                Customer  @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  productKey              String
+  productName             String
+  amountExGstCents        Int
+  status                  String
+  stripeSubscriptionId    String?
+  stripeCheckoutSessionId String?
+  currentPeriodEnd        DateTime?
+  cancelAtPeriodEnd       Boolean   @default(false)
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime  @updatedAt
+
+  @@unique([stripeCheckoutSessionId, productKey])
+  @@index([customerId])
+  @@index([stripeSubscriptionId])
+  @@index([status])
+}
+
+model StripeEvent {
+  id          String   @id
+  type        String
+  processedAt DateTime @default(now())
+}
+
+model EmailLog {
+  id        String   @id @default(cuid())
+  to        String
+  subject   String
+  status    String
+  provider  String
+  relatedId String?
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+}
+
+model Product {
+  key             String   @id
+  name            String
+  summary         String
+  audience        String
+  priceExGstCents Int
+  interval        String?
+  badge           String?
+  cta             String
+  features        String
+  footnote        String?
+  active          Boolean  @default(true)
+  sortOrder       Int
+  kind            String
+  updatedAt       DateTime @updatedAt
+}
+
+model ContentEntry {
+  key       String   @id
+  value     String
+  updatedAt DateTime @updatedAt
+}
