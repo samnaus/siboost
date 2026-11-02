@@ -1,11 +1,12 @@
 import { JsonLd } from "@/components/json-ld"
 import { getSiteContent } from "@/lib/content/get-content"
+import { publicTerms } from "@/lib/public-site"
 import { pageMetadata } from "@/lib/seo"
 import { breadcrumbJsonLd } from "@/lib/schema"
 
 export const metadata = pageMetadata(
   "Terms of service",
-  "Draft terms for Siboost website upgrades and optional subscriptions. For legal review before publication.",
+  "Draft terms for Siboost website upgrades. For legal review before publication.",
   "/terms",
 )
 
@@ -25,7 +26,7 @@ export default async function TermsPage() {
         </p>
         <h1 className="mt-6 text-4xl font-extrabold tracking-tight">Terms of service</h1>
         <div className="mt-8 space-y-8">
-          {content.terms.sections.map((section) => (
+          {publicTerms(content.terms.sections).map((section) => (
             <section key={section.heading}>
               <h2 className="text-2xl font-bold">{section.heading}</h2>
               {section.paragraphs.map((paragraph) => (

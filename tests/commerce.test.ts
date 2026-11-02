@@ -9,6 +9,7 @@ import { defaultSiteContent } from "../lib/content/defaults"
 import { getPaymentsState } from "../lib/env"
 import { dollarsToCents, formatNzd, gstCentsFromExclusive } from "../lib/money"
 import { renderLlmsTxt } from "../lib/llms"
+import { publicFaqs } from "../lib/public-site"
 import { readinessSchema } from "../lib/validation"
 
 const prisma = new PrismaClient()
@@ -51,12 +52,12 @@ describe("checkout quote", () => {
     assert.ok(result.quote.bundleNote)
   })
 
-  it("uses payment mode for a package alone and warns about the assistant", () => {
+  it("uses payment mode for a package alone", () => {
     const result = quoteCheckout({ packageKey: "si-boost", subscriptionKeys: [] }, defaultCatalog, { chargeGst: true })
     assert.equal(result.ok, true)
     if (!result.ok) return
     assert.equal(result.quote.mode, "payment")
-    assert.match(result.quote.agentWarning || "", /SI Agent/)
+    assert.equal(result.quote.agentWarning, null)
   })
 
   it("rejects an empty selection", () => {
@@ -146,9 +147,38 @@ describe("content and validation", () => {
   })
 
   it("describes llms.txt as a summary, not a substitute", () => {
+    const previous = process.env.SUBSCRIPTIONS_ENABLED
+    delete process.env.SUBSCRIPTIONS_ENABLED
     const text = renderLlmsTxt(defaultSiteContent, defaultCatalog)
+    if (previous === undefined) delete process.env.SUBSCRIPTIONS_ENABLED
+    else process.env.SUBSCRIPTIONS_ENABLED = previous
     assert.match(text, /does not replace a crawlable website/i)
-    assert.match(text, /does not guarantee/i)
+    assert.doesNotMatch(text, /does not guarantee/i)
+    assert.doesNotMatch(text, /ai-sales-agents/i)
+    assert.doesNotMatch(text, /SI Care/)
+    assert.match(text, /SI Boost/)
+  })
+
+  it("keeps package lists free of sales-agent offers and hides subscription FAQs by default", () => {
+    const previous = process.env.SUBSCRIPTIONS_ENABLED
+    delete process.env.SUBSCRIPTIONS_ENABLED
+    const boost = defaultCatalog.find((product) => product.key === "si-boost")
+    const complete = defaultCatalog.find((product) => product.key === "si-complete")
+    assert.ok(boost && complete)
+    const features = [...boost.features, ...complete.features].join("\n")
+    assert.doesNotMatch(features, /sales agent|lead capture and qualification|knowledge sources/i)
+    assert.equal(
+      defaultSiteContent.comparison.rows.some((row) => /sales agent|lead capture|knowledge sources|lead follow-up/i.test(row.feature)),
+      false,
+    )
+    const faqs = publicFaqs(defaultSiteContent.faqs)
+    assert.equal(faqs.some((faq) => /subscription/i.test(faq.question)), false)
+    assert.match(
+      defaultSiteContent.terms.sections.flatMap((section) => section.paragraphs).join(" "),
+      /We do not guarantee rankings, recommendations or enquiries/,
+    )
+    if (previous === undefined) delete process.env.SUBSCRIPTIONS_ENABLED
+    else process.env.SUBSCRIPTIONS_ENABLED = previous
   })
 })
 

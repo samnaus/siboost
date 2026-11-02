@@ -1,37 +1,36 @@
 import Link from "next/link"
 import { Wordmark } from "@/components/wordmark"
 import type { SiteContent } from "@/lib/content/types"
-
-const columns = [
-  {
-    title: "Explore",
-    links: [
-      ["/packages", "Packages and pricing"],
-      ["/ai-sales-agents", "AI sales agents"],
-      ["/ai-search-readiness", "AI search readiness"],
-      ["/how-it-works", "How it works"],
-    ],
-  },
-  {
-    title: "Company",
-    links: [
-      ["/about", "About Siboost"],
-      ["/contact", "Contact"],
-      ["/check", "Website readiness check"],
-      ["/billing", "Manage billing"],
-    ],
-  },
-  {
-    title: "Legal",
-    links: [
-      ["/privacy", "Privacy policy"],
-      ["/terms", "Terms of service"],
-      ["/llms.txt", "llms.txt"],
-    ],
-  },
-] as const
+import { subscriptionsEnabled } from "@/lib/env"
 
 export function SiteFooter({ content }: { content: SiteContent }) {
+  const columns = [
+    {
+      title: "Explore",
+      links: [
+        ["/packages", "Packages and pricing"],
+        ["/ai-search-readiness", "AI search readiness"],
+        ["/how-it-works", "How it works"],
+      ],
+    },
+    {
+      title: "Company",
+      links: [
+        ["/about", "About Siboost"],
+        ["/contact", "Contact"],
+        ["/check", "Website readiness check"],
+        ...(subscriptionsEnabled() ? [["/billing", "Manage billing"]] : []),
+      ],
+    },
+    {
+      title: "Legal",
+      links: [
+        ["/privacy", "Privacy policy"],
+        ["/terms", "Terms of service"],
+        ["/llms.txt", "llms.txt"],
+      ],
+    },
+  ]
   return (
     <footer className="border-t border-slate-200 bg-[#0f172a] text-slate-200">
       <div className="mx-auto grid max-w-6xl gap-10 px-5 py-14 md:grid-cols-[1.3fr_1fr_1fr_1fr] md:px-8">

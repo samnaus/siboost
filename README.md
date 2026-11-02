@@ -1,10 +1,10 @@
 # Siboost
 
-Marketing and checkout site for Siboost, a New Zealand business that upgrades existing websites for AI-assisted discovery and can set up a branded website assistant.
+Marketing and checkout site for Siboost, a New Zealand business that upgrades existing websites for AI-assisted discovery.
 
 Tagline: **Websites built for the way people search now.**
 
-Prices are in NZD and exclude GST. The site does not claim that AI optimisation guarantees rankings, recommendations or enquiries. The on-site chat is a labelled demonstration. The readiness check stores a request for a person to review. It does not produce a score.
+Prices are in NZD and exclude GST. The public site offers one-off packages. Monthly subscriptions stay in the Stripe code and stay hidden until `SUBSCRIPTIONS_ENABLED=true`. AI sales agents are not offered; `/ai-sales-agents` redirects to `/packages`. The readiness check stores a request for a person to review. It does not produce a score.
 
 ## Run it locally
 
@@ -44,10 +44,11 @@ Change both before anyone else can reach the machine. Admin is at `/admin`.
 | --- | --- |
 | Public pages, forms, admin, sitemap, robots, schema.org | Working. Enquiries and readiness checks are stored in the database. |
 | Prices, package features, homepage headline, FAQs, about copy | Editable in `/admin`. Other page copy lives in `lib/content/defaults.ts`. |
-| Stripe Checkout, subscriptions, GST, webhooks, customer portal | Implemented. They stay off until test keys are set. The site then says **Payments are not yet configured.** |
+| Stripe Checkout, GST, webhooks, customer portal | Implemented. They stay off until test keys are set. The site then says **Payments are not yet configured.** |
+| Monthly subscriptions | Implemented and hidden. Set `SUBSCRIPTIONS_ENABLED=true` to show SI Care, SI Agent and the bundle, and to accept them at checkout. |
 | Live Stripe charges | Locked. A live secret key is ignored unless `ALLOW_LIVE_STRIPE=true`. |
 | Transactional email | Resend or Postmark when configured. Otherwise the full message is printed in the server console and recorded as `logged`. |
-| AI sales assistant | Scripted demonstration only. No model and no third-party agent platform is connected. |
+| AI sales agents | Not offered on the public site. `/ai-sales-agents` redirects to `/packages`. |
 | Website readiness check | A validated form. A person reviews it. There is no automated score. |
 | llms.txt | A plain-language summary at `/llms.txt`. It does not replace crawlability, content, structured data or ordinary SEO. |
 | Analytics | Not loaded unless `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` or `NEXT_PUBLIC_GA_MEASUREMENT_ID` is set. |
@@ -70,6 +71,7 @@ Copy `.env.example` to `.env`. Never commit real secrets.
 | `STRIPE_GST_TAX_RATE_ID` | Optional. If empty, the app reuses or creates a 15% exclusive NZ GST tax rate named GST. |
 | `STRIPE_PORTAL_CONFIGURATION_ID` | Optional Stripe Billing Portal configuration. One is created if this is empty. |
 | `ALLOW_LIVE_STRIPE` | Must be `true` before an `sk_live_` key is accepted. Default is off. |
+| `SUBSCRIPTIONS_ENABLED` | `true` shows SI Care, SI Agent and the combined bundle, and allows subscription checkout. Default is off. Redeploy after changing it. |
 | `CHARGE_GST` | `true` by default. Set `false` only if the business must not add 15% GST. |
 | `EMAIL_FROM` | From address, such as `Siboost <hello@siboost.co.nz>`. Required for real email. |
 | `RESEND_API_KEY` | Resend API key. Used first if both email providers are set. |

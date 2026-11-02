@@ -78,6 +78,10 @@ export function getEmailState(): EmailState {
   return { configured: false, provider: "console" }
 }
 
+export function subscriptionsEnabled() {
+  return process.env.SUBSCRIPTIONS_ENABLED === "true"
+}
+
 export function adminConfigured() {
   return Boolean(
     process.env.ADMIN_EMAIL?.trim() &&

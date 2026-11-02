@@ -1,6 +1,6 @@
 import { connection } from "next/server"
 import { prisma } from "@/lib/db"
-import { adminConfigured, getEmailState, getPaymentsState, webhookConfigured } from "@/lib/env"
+import { adminConfigured, getEmailState, getPaymentsState, subscriptionsEnabled, webhookConfigured } from "@/lib/env"
 import { chargeGst } from "@/lib/money"
 
 export const metadata = { title: "Admin", robots: { index: false, follow: false } }
@@ -44,7 +44,13 @@ export default async function AdminHome() {
         <li>Webhook secret: {webhookConfigured() ? "set" : "not set. Orders can still be recorded from the success page."}</li>
         <li>Email: {email.configured ? `sending with ${email.provider}` : "not configured. Messages are logged in the server console."}</li>
         <li>GST: {chargeGst() ? "15% is added at checkout" : "GST is switched off with CHARGE_GST=false"}</li>
-        <li>AI assistant on this website: demonstration only. No provider is connected.</li>
+        <li>
+          Monthly subscriptions:{" "}
+          {subscriptionsEnabled()
+            ? "shown on the public site."
+            : "hidden. Set SUBSCRIPTIONS_ENABLED=true to offer SI Care, SI Agent and the bundle again."}
+        </li>
+        <li>AI sales agents: not offered on the public site. /ai-sales-agents redirects to /packages.</li>
         <li>Readiness check: stores a request for a human review. It does not produce a score.</li>
       </ul>
     </div>

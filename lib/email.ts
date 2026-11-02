@@ -115,6 +115,10 @@ export function orderEmail(input: {
   const testNote = input.testMode
     ? "\nThis payment was taken in Stripe test mode. It is not a live charge.\n"
     : ""
+  const hasSubscription = input.lines.some((line) => line.interval)
+  const subscriptionStep = hasSubscription
+    ? `3. You can manage the card, invoices and cancellation here: ${input.billingUrl}\n`
+    : ""
   const text = `Kia ora ${input.contactName},
 
 We've received your Siboost order for ${input.businessName}.
@@ -128,10 +132,7 @@ Total: ${input.total}
 What happens next
 1. We reply to confirm the project and ask for access to the website.
 2. We agree the scope, then start the work in the package you chose.
-3. If you added a subscription, you can manage the card, invoices and cancellation here: ${input.billingUrl}
-
-Siboost improves how clearly a website can be understood and how easily visitors can enquire. It does not guarantee that any AI system will rank, recommend or mention the business.
-
+${subscriptionStep}
 — Siboost
 `
   const html = `<p>Kia ora ${escapeHtml(input.contactName)},</p>
@@ -148,9 +149,12 @@ ${input.testMode ? "<p><strong>This payment was taken in Stripe test mode. It is
 <ol>
 <li>We reply to confirm the project and ask for access to the website.</li>
 <li>We agree the scope, then start the work in the package you chose.</li>
-<li>If you added a subscription, you can manage the card, invoices and cancellation here: <a href="${escapeHtml(input.billingUrl)}">${escapeHtml(input.billingUrl)}</a></li>
+${
+  hasSubscription
+    ? `<li>You can manage the card, invoices and cancellation here: <a href="${escapeHtml(input.billingUrl)}">${escapeHtml(input.billingUrl)}</a></li>`
+    : ""
+}
 </ol>
-<p>Siboost improves how clearly a website can be understood and how easily visitors can enquire. It does not guarantee that any AI system will rank, recommend or mention the business.</p>
 <p>— Siboost</p>`
 
   return {
@@ -167,11 +171,11 @@ export function enquiryEmail(input: { to: string; name: string; kind: string }) 
 
 Thanks for contacting Siboost. We've received your ${input.kind} and a person on the team will reply. We aim to respond within two business days.
 
-This note confirms we received the form. It is not an audit result, and it does not mean an AI assistant will recommend the business.
+This note confirms we received the form. A person will review it.
 
 — Siboost
 `
-  const html = `<p>Kia ora ${escapeHtml(input.name)},</p><p>Thanks for contacting Siboost. We've received your ${escapeHtml(input.kind)} and a person on the team will reply. We aim to respond within two business days.</p><p>This note confirms we received the form. It is not an audit result, and it does not mean an AI assistant will recommend the business.</p><p>— Siboost</p>`
+  const html = `<p>Kia ora ${escapeHtml(input.name)},</p><p>Thanks for contacting Siboost. We've received your ${escapeHtml(input.kind)} and a person on the team will reply. We aim to respond within two business days.</p><p>This note confirms we received the form. A person will review it.</p><p>— Siboost</p>`
   return {
     to: input.to,
     subject: "We've received your Siboost enquiry",

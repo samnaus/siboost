@@ -51,17 +51,19 @@ export function CheckoutForm({
         ) : null}
         <fieldset className="grid gap-3">
           <legend className="text-base font-semibold text-[#0f172a]">Package</legend>
-          <label className="flex items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-sm">
-            <input
-              type="radio"
-              name="packageKey"
-              value=""
-              defaultChecked={initialPackage === ""}
-              className="size-4 accent-[#2563eb]"
-              onChange={() => setPackageKey("")}
-            />
-            No package. Subscriptions only.
-          </label>
+          {plans.length > 0 ? (
+            <label className="flex items-center gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-sm">
+              <input
+                type="radio"
+                name="packageKey"
+                value=""
+                defaultChecked={initialPackage === ""}
+                className="size-4 accent-[#2563eb]"
+                onChange={() => setPackageKey("")}
+              />
+              No package. Subscriptions only.
+            </label>
+          ) : null}
           {packages.map((product) => (
             <label key={product.key} className="flex items-start gap-3 rounded-2xl border border-slate-200 px-4 py-3 text-sm">
               <input
@@ -79,6 +81,7 @@ export function CheckoutForm({
             </label>
           ))}
         </fieldset>
+        {plans.length > 0 ? (
         <fieldset className="grid gap-3">
           <legend className="text-base font-semibold text-[#0f172a]">Optional subscriptions</legend>
           {plans.map((product) => (
@@ -101,6 +104,7 @@ export function CheckoutForm({
             </label>
           ))}
         </fieldset>
+        ) : null}
         <div className="grid gap-4">
           <div className="grid gap-2">
             <Label htmlFor="checkout-name">Contact name</Label>
@@ -171,7 +175,7 @@ export function CheckoutForm({
           <p className="mt-4 text-sm text-slate-700">{quoted.error}</p>
         )}
         <p className="mt-4 text-xs leading-5 text-slate-500">
-          Card details are entered on Stripe. Siboost does not store card numbers. This does not guarantee search rankings, AI recommendations or enquiries.
+          Card details are entered on Stripe. Siboost does not store card numbers.
         </p>
       </aside>
     </form>

@@ -149,7 +149,6 @@ export async function updateContent(_prev: ActionState, formData: FormData): Pro
     heroSubheadline: formData.get("heroSubheadline"),
     readinessIntro: formData.get("readinessIntro"),
     about: formData.get("about"),
-    demoDisclaimer: formData.get("demoDisclaimer"),
     faqs,
   })
   if (!parsed.success) {
@@ -171,7 +170,6 @@ export async function updateContent(_prev: ActionState, formData: FormData): Pro
         .map((paragraph) => paragraph.trim())
         .filter(Boolean),
     },
-    agent: { ...merged.agent, demoDisclaimer: parsed.data.demoDisclaimer },
     faqs: parsed.data.faqs,
   }
   await prisma.contentEntry.upsert({

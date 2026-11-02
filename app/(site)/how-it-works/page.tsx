@@ -36,8 +36,8 @@ export default async function HowPage() {
         <ul className="mt-4 list-disc space-y-2 pl-5 text-slate-700">
           <li>The website address and who the business serves</li>
           <li>Access to the site, or a person who can publish changes</li>
-          <li>Approval of any facts the assistant is allowed to say</li>
-          <li>A decision on whether you want SI Care, SI Agent, both, or neither</li>
+          <li>The services, locations and facts you want the pages to state</li>
+          <li>Approval of the scope before we start</li>
         </ul>
         <p className="mt-6 leading-7 text-slate-600">
           Timing depends on the package and how quickly we can access the website. We aim to reply to a new enquiry within two business days. We agree the scope before build work starts.

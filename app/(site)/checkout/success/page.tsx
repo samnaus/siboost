@@ -75,13 +75,18 @@ async function Success({ searchParams }: { searchParams: Promise<{ session_id?: 
         ))}
       </ul>
       <p className="mt-6 text-sm leading-6 text-slate-600">
-        We will reply to confirm access to the website and the scope. Managing a subscription happens in the billing portal.
+        We will reply to confirm access to the website and the scope.
+        {loaded.items.some((item) => item.i === "month")
+          ? " Managing a subscription happens in the billing portal."
+          : ""}
       </p>
-      <p className="mt-6">
-        <Link href="/billing" className="font-semibold text-[#1d4ed8] underline">
-          Manage billing
-        </Link>
-      </p>
+      {loaded.items.some((item) => item.i === "month") ? (
+        <p className="mt-6">
+          <Link href="/billing" className="font-semibold text-[#1d4ed8] underline">
+            Manage billing
+          </Link>
+        </p>
+      ) : null}
     </section>
   )
 }

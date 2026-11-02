@@ -11,7 +11,7 @@ import type { SiteContent } from "@/lib/content/types"
 import { centsToDollarInput } from "@/lib/money"
 import { initialActionState } from "@/lib/validation"
 
-export function ProductEditor({ product }: { product: PublicProduct }) {
+export function ProductEditor({ product, publiclyHidden = false }: { product: PublicProduct; publiclyHidden?: boolean }) {
   const [state, action, pending] = useActionState(updateProduct, initialActionState)
   return (
     <form action={action} className="grid gap-3 rounded-2xl border border-slate-200 p-4">
@@ -20,6 +20,11 @@ export function ProductEditor({ product }: { product: PublicProduct }) {
         <span className="text-xs text-slate-500">{product.key}</span>
       </div>
       <input type="hidden" name="key" value={product.key} />
+      {publiclyHidden ? (
+        <p className="rounded-xl bg-slate-100 px-3 py-2 text-sm leading-6 text-slate-700">
+          Hidden on the public site while monthly subscriptions are switched off. Set SUBSCRIPTIONS_ENABLED=true to offer this again. Stripe subscription handling stays in place.
+        </p>
+      ) : null}
       {state.formError ? <p className="text-sm text-red-700">{state.formError}</p> : null}
       {state.ok ? <p className="text-sm text-emerald-700">Saved.</p> : null}
       <Label htmlFor={`${product.key}-name`}>Name</Label>
@@ -38,7 +43,7 @@ export function ProductEditor({ product }: { product: PublicProduct }) {
       <Textarea id={`${product.key}-features`} name="features" defaultValue={product.features.join("\n")} rows={8} required />
       <Label htmlFor={`${product.key}-footnote`}>Footnote</Label>
       <Textarea id={`${product.key}-footnote`} name="footnote" defaultValue={product.footnote ?? ""} rows={4} />
-      <Label htmlFor={`${product.key}-active`}>Visible on the site</Label>
+      <Label htmlFor={`${product.key}-active`}>{publiclyHidden ? "Active in the catalogue" : "Visible on the site"}</Label>
       <select id={`${product.key}-active`} name="active" defaultValue={product.active ? "yes" : "no"} className="h-10 rounded-lg border px-3">
         <option value="yes">Yes</option>
         <option value="no">No</option>
@@ -50,7 +55,7 @@ export function ProductEditor({ product }: { product: PublicProduct }) {
   )
 }
 
-export function ContentEditor({ content }: { content: SiteContent }) {
+export function ContentEditor({ content, subscriptionsOff }: { content: SiteContent; subscriptionsOff: boolean }) {
   const [state, action, pending] = useActionState(updateContent, initialActionState)
   return (
     <form action={action} className="grid gap-4">
@@ -69,12 +74,15 @@ export function ContentEditor({ content }: { content: SiteContent }) {
       <Label htmlFor="about">About paragraphs</Label>
       <Textarea id="about" name="about" defaultValue={content.about.paragraphs.join("\n\n")} rows={8} required />
       <p className="text-sm text-slate-500">Separate paragraphs with a blank line.</p>
-      <Label htmlFor="demoDisclaimer">AI demonstration label</Label>
-      <Textarea id="demoDisclaimer" name="demoDisclaimer" defaultValue={content.agent.demoDisclaimer} required />
       <fieldset className="grid gap-4">
         <legend className="font-semibold">FAQs</legend>
         {content.faqs.map((faq, index) => (
           <div key={`${faq.question}-${index}`} className="grid gap-2 rounded-xl border border-slate-200 p-3">
+            {subscriptionsOff && /subscription|SI Care|SI Agent/i.test(`${faq.question} ${faq.answer}`) ? (
+              <p className="text-sm leading-6 text-slate-600">
+                Hidden on the public site while monthly subscriptions are switched off.
+              </p>
+            ) : null}
             <Label htmlFor={`faq-q-${index}`}>Question</Label>
             <Input id={`faq-q-${index}`} name="faqQuestion" defaultValue={faq.question} />
             <Label htmlFor={`faq-a-${index}`}>Answer</Label>

@@ -7,9 +7,10 @@ import { PackageCards } from "@/components/package-cards"
 import { PaymentsNotice } from "@/components/payments-notice"
 import { SubscriptionCards } from "@/components/subscription-cards"
 import { getSiteContent } from "@/lib/content/get-content"
-import { getPaymentsState } from "@/lib/env"
+import { getPaymentsState, subscriptionsEnabled } from "@/lib/env"
 import { chargeGst } from "@/lib/money"
 import { getProducts } from "@/lib/products"
+import { publicFaqs } from "@/lib/public-site"
 import { pageMetadata } from "@/lib/seo"
 import { breadcrumbJsonLd, offersJsonLd } from "@/lib/schema"
 
@@ -31,6 +32,8 @@ async function PackagesPage() {
   const [content, products] = await Promise.all([getSiteContent(), getProducts()])
   const payments = getPaymentsState()
   const gst = chargeGst()
+  const showSubscriptions = subscriptionsEnabled() && products.some((product) => product.kind === "subscription")
+  const pricingFaqs = publicFaqs(content.faqs).filter((faq) => /GST|subscription|llms/i.test(faq.question))
   return (
     <>
       <JsonLd
@@ -60,20 +63,22 @@ async function PackagesPage() {
           <ComparisonTable rows={content.comparison.rows} />
         </div>
       </section>
-      <section className="bg-slate-50">
-        <div className="mx-auto max-w-6xl px-5 py-16 md:px-8">
-          <p className="text-sm font-semibold text-[#1d4ed8]">{content.subscriptionsIntro.eyebrow}</p>
-          <h2 className="mt-3 text-3xl font-extrabold tracking-tight">{content.subscriptionsIntro.headline}</h2>
-          <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">{content.subscriptionsIntro.intro}</p>
-          <div className="mt-8">
-            <SubscriptionCards products={products} content={content} chargeGst={gst} />
+      {showSubscriptions ? (
+        <section className="bg-slate-50">
+          <div className="mx-auto max-w-6xl px-5 py-16 md:px-8">
+            <p className="text-sm font-semibold text-[#1d4ed8]">{content.subscriptionsIntro.eyebrow}</p>
+            <h2 className="mt-3 text-3xl font-extrabold tracking-tight">{content.subscriptionsIntro.headline}</h2>
+            <p className="mt-4 max-w-3xl text-lg leading-8 text-slate-600">{content.subscriptionsIntro.intro}</p>
+            <div className="mt-8">
+              <SubscriptionCards products={products} content={content} chargeGst={gst} />
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
       <section className="mx-auto max-w-3xl px-5 py-16 md:px-8">
         <h2 className="text-3xl font-extrabold tracking-tight">Pricing questions</h2>
         <div className="mt-6">
-          <FaqList faqs={content.faqs.filter((faq) => /GST|subscription|llms|recommend/i.test(faq.question))} />
+          <FaqList faqs={pricingFaqs} />
         </div>
       </section>
     </>

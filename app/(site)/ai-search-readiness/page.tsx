@@ -26,10 +26,10 @@ export default async function ReadinessPage() {
         </h1>
         <div className="mt-6 space-y-4 text-lg leading-8 text-slate-700">
           <p>
-            AI search readiness means a person, and the tools they use, can find what your business does, where you work, and how to get in touch. It is ordinary clarity, structure and technical access. It is not a switch that forces an assistant to recommend you.
+            AI search readiness means a person, and the tools they use, can find what your business does, where you work, and how to get in touch. It is ordinary clarity, structure and technical access.
           </p>
           <p>
-            Traditional search still matters. Customers still open Google, compare websites and make their own shortlist. The same pages are now also read by AI assistants. A website needs to work for both, which is why crawlability, headings, structured data and plain-language service pages still do the heavy lifting.
+            Traditional search still matters. Customers still open Google, compare websites and make their own shortlist. The same pages are now also read by AI search tools. A website needs to work for both, which is why crawlability, headings, structured data and plain-language service pages still do the heavy lifting.
           </p>
         </div>
         <h2 className="mt-10 text-2xl font-bold">What we usually improve</h2>

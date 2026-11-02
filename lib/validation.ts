@@ -78,7 +78,6 @@ export const contentUpdateSchema = z.object({
   heroSubheadline: z.string().trim().min(20).max(500),
   readinessIntro: z.string().trim().min(20).max(800),
   about: z.string().trim().min(40).max(5000),
-  demoDisclaimer: z.string().trim().min(20).max(400),
   faqs: z
     .array(
       z.object({
