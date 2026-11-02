@@ -30,6 +30,9 @@ const nextConfig: NextConfig = {
   async headers() {
     return [{ source: "/:path*", headers: securityHeaders }]
   },
+  async redirects() {
+    return [{ source: "/ai-sales-agents", destination: "/packages", permanent: false }]
+  },
 }
 
 export default nextConfig

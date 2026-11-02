@@ -54,15 +54,10 @@ await shot(desktop, "pricing-desktop")
 await scan(desktop, "pricing-desktop")
 
 await desktop.goto(`${base}/ai-sales-agents`, { waitUntil: "networkidle" })
-await desktop.getByRole("button", { name: "What areas do you work in?" }).click()
-try {
-  await desktop.getByText("Christchurch and wider Canterbury").waitFor({ timeout: 5000 })
-} catch (error) {
-  console.log(await desktop.locator("[role=log]").innerText())
-  throw error
+if (!new URL(desktop.url()).pathname.startsWith("/packages")) {
+  throw new Error(`Expected /ai-sales-agents to redirect to /packages, got ${desktop.url()}`)
 }
-await shot(desktop, "ai-agent-demo-desktop")
-await scan(desktop, "agents-desktop")
+console.log("ai-sales-agents redirects to packages")
 
 await desktop.goto(`${base}/checkout?package=si-boost`, { waitUntil: "networkidle" })
 const notice = desktop.getByText("Payments are not yet configured.")
@@ -105,7 +100,9 @@ const pricingOverflow = await mobile.evaluate(() => document.documentElement.scr
 if (pricingOverflow) issues.push({ name: "pricing-mobile", result: [{ id: "horizontal-overflow", impact: "serious", nodes: 1 }] })
 
 await mobile.goto(`${base}/ai-sales-agents`, { waitUntil: "networkidle" })
-await shot(mobile, "ai-agent-demo-mobile")
+if (!new URL(mobile.url()).pathname.startsWith("/packages")) {
+  throw new Error(`Expected /ai-sales-agents to redirect to /packages, got ${mobile.url()}`)
+}
 
 await browser.close()
 

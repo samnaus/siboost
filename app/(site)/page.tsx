@@ -1,4 +1,3 @@
-import { AgentDemo } from "@/components/agent-demo"
 import { CtaLink } from "@/components/cta-link"
 import { FaqList } from "@/components/faq-list"
 import { ReadinessForm } from "@/components/forms"
@@ -8,6 +7,7 @@ import { PackageCards } from "@/components/package-cards"
 import { getSiteContent } from "@/lib/content/get-content"
 import { chargeGst, formatNzdCompact } from "@/lib/money"
 import { getProducts } from "@/lib/products"
+import { publicFaqs } from "@/lib/public-site"
 import { pageMetadata } from "@/lib/seo"
 import { faqJsonLd, offersJsonLd } from "@/lib/schema"
 
@@ -19,10 +19,11 @@ export async function generateMetadata() {
 export default async function HomePage() {
   const [content, products] = await Promise.all([getSiteContent(), getProducts()])
   const gst = chargeGst()
+  const faqs = publicFaqs(content.faqs)
   const fromPrice = Math.min(...products.filter((product) => product.kind === "package").map((product) => product.priceExGstCents))
   return (
     <>
-      <JsonLd data={faqJsonLd(content.faqs)} />
+      <JsonLd data={faqJsonLd(faqs)} />
       <JsonLd data={offersJsonLd(products)} />
       <section className="hero-wash">
         <div className="mx-auto grid max-w-6xl items-center gap-12 px-5 py-16 md:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:py-24">
@@ -41,7 +42,6 @@ export default async function HomePage() {
             <ul className="mt-8 space-y-2 text-sm text-slate-600">
               <li>One-off packages from {formatNzdCompact(fromPrice)} excl. GST.</li>
               <li>For New Zealand businesses that already have a website.</li>
-              <li>No guaranteed rankings, recommendations or enquiries.</li>
             </ul>
           </div>
           <HeroIllustration />
@@ -86,7 +86,7 @@ export default async function HomePage() {
           <p className="text-sm font-semibold text-[#1d4ed8]">{content.pillars.eyebrow}</p>
           <h2 className="mt-3 text-3xl font-extrabold tracking-tight md:text-4xl">{content.pillars.headline}</h2>
           <p className="mt-4 max-w-2xl text-lg leading-8 text-slate-600">{content.pillars.intro}</p>
-          <div className="mt-10 grid gap-5 md:grid-cols-2">
+          <div className="mt-10 grid gap-5 md:grid-cols-3">
             {content.pillars.items.map((item) => (
               <article key={item.title} className="rounded-3xl border border-slate-200 bg-white p-6">
                 <h3 className="text-lg font-bold">{item.title}</h3>
@@ -113,27 +113,6 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="border-y border-slate-200 bg-slate-50">
-        <div className="mx-auto grid max-w-6xl gap-10 px-5 py-16 md:px-8 lg:grid-cols-2 lg:py-24">
-          <div>
-            <p className="text-sm font-semibold text-[#1d4ed8]">{content.agent.eyebrow}</p>
-            <h2 className="mt-3 text-3xl font-extrabold tracking-tight md:text-4xl">{content.agent.headline}</h2>
-            <p className="mt-4 text-lg leading-8 text-slate-600">{content.agent.subheadline}</p>
-            <ul className="mt-6 grid gap-2 text-sm leading-6 text-slate-700 sm:grid-cols-2">
-              {content.agent.capabilities.map((item) => (
-                <li key={item} className="rounded-2xl bg-white px-3 py-2">
-                  {item}
-                </li>
-              ))}
-            </ul>
-            <div className="mt-6">
-              <CtaLink href="/ai-sales-agents">See the assistant</CtaLink>
-            </div>
-          </div>
-          <AgentDemo agent={content.agent} />
-        </div>
-      </section>
-
       <section className="mx-auto max-w-6xl px-5 py-16 md:px-8 md:py-24">
         <p className="text-sm font-semibold text-[#1d4ed8]">{content.howItWorks.eyebrow}</p>
         <h2 className="mt-3 text-3xl font-extrabold tracking-tight md:text-4xl">{content.howItWorks.headline}</h2>
@@ -153,7 +132,6 @@ export default async function HomePage() {
           <div>
             <h2 className="text-3xl font-extrabold tracking-tight">{content.readiness.headline}</h2>
             <p className="mt-4 text-lg leading-8 text-slate-300">{content.readiness.intro}</p>
-            <p className="mt-4 text-sm leading-6 text-slate-400">{content.readiness.notIncluded}</p>
           </div>
           <ReadinessForm content={content} />
         </div>
@@ -162,7 +140,7 @@ export default async function HomePage() {
       <section className="mx-auto max-w-3xl px-5 py-16 md:px-8 md:py-24">
         <h2 className="text-3xl font-extrabold tracking-tight">Questions worth asking first</h2>
         <div className="mt-8">
-          <FaqList faqs={content.faqs} />
+          <FaqList faqs={faqs} />
         </div>
       </section>
     </>

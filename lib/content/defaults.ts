@@ -10,31 +10,31 @@ export const defaultSiteContent: SiteContent = {
   seo: {
     homeTitle: "Websites built for the way people search now",
     homeDescription:
-      "Siboost upgrades New Zealand business websites for AI-assisted discovery and helps turn more visitors into enquiries. Packages from $1,999 excl. GST.",
+      "Siboost upgrades New Zealand business websites for AI-assisted discovery, with clearer pages and a stronger enquiry path. Packages from $1,999 excl. GST.",
     packagesTitle: "Packages and pricing",
     packagesDescription:
-      "SI Ready, SI Boost and SI Complete. One-off website projects in NZD, excluding GST, with optional monthly care and AI assistant subscriptions.",
+      "SI Ready, SI Boost and SI Complete. One-off website projects in NZD, excluding GST.",
     agentsTitle: "AI sales agents",
     agentsDescription:
       "A branded website assistant that answers questions, qualifies enquiries and collects contact details. See a clearly labelled demonstration.",
     readinessTitle: "AI search readiness",
     readinessDescription:
-      "How Siboost prepares an existing website so people and AI assistants can understand the business. No guaranteed rankings or recommendations.",
+      "How Siboost prepares an existing website so people and AI search tools can understand the business.",
     howTitle: "How it works",
     howDescription:
-      "Submit your website, we review it, we upgrade what we agree, and you can choose ongoing care as search tools change.",
+      "Submit your website, we review it, we upgrade what we agree, and we hand the site back with the changes explained.",
     aboutTitle: "About Siboost",
     aboutDescription:
       "Siboost is a New Zealand business helping small and medium-sized companies keep their websites discoverable and useful.",
     contactTitle: "Contact",
     contactDescription:
-      "Ask about a website upgrade, a consultation, or the AI sales assistant. We aim to reply within two business days.",
+      "Ask about a website upgrade or a consultation. We aim to reply within two business days.",
   },
   hero: {
     eyebrow: "New Zealand website upgrades",
     headline: "Search has changed. Is your website ready?",
     subheadline:
-      "We upgrade business websites for the AI era, helping customers discover your business through modern search while turning more website visitors into enquiries.",
+      "We upgrade business websites for the AI era, so customers can find you through modern search and the site itself is easier to use and enquire through.",
     primaryCta: "Explore Packages",
     secondaryCta: "Check My Website",
   },
@@ -42,7 +42,7 @@ export const defaultSiteContent: SiteContent = {
     eyebrow: "The shift",
     headline: "Your customers are searching differently.",
     intro:
-      "For a long time, a customer searched Google, opened a handful of websites and chose who to contact. Many people still do that. Alongside it, customers now ask AI assistants such as ChatGPT, Gemini and Google AI Search to research, compare and discover businesses.",
+      "For a long time, a customer searched Google, opened a handful of websites and chose who to contact. Many people still do that. Alongside it, customers now ask AI tools such as ChatGPT, Gemini and Google AI Search to research, compare and discover businesses.",
     traditionalTitle: "Traditional search",
     traditional: [
       "Customer searches Google.",
@@ -52,17 +52,17 @@ export const defaultSiteContent: SiteContent = {
     ],
     aiTitle: "AI-powered discovery",
     ai: [
-      "Customer asks an AI assistant.",
+      "Customer asks an AI tool.",
       "AI gathers relevant business information.",
       "AI presents answers and recommendations.",
       "Customer contacts or visits a business.",
     ],
-    note: "Google search has not disappeared. A website still needs to work for people on their phones, for traditional search, and for the AI tools that read the same pages. Siboost helps the site stay clear and useful across those paths. It does not guarantee that any assistant will rank, recommend or mention your business.",
+    note: "Google search has not disappeared. A website still needs to work for people on their phones, for traditional search, and for the AI tools that read the same pages. Siboost helps the site stay clear and useful across those paths.",
   },
   pillars: {
     eyebrow: "The work",
     headline: "What Siboost does",
-    intro: "Four kinds of work. You can start with readiness alone, or go further into the website and an assistant.",
+    intro: "Three kinds of work. You can start with readiness alone, or go further into the design, speed and enquiry path.",
     items: [
       {
         title: "AI Search Readiness",
@@ -73,19 +73,15 @@ export const defaultSiteContent: SiteContent = {
         body: "Improve website design, speed, mobile usability and conversion performance.",
       },
       {
-        title: "AI Sales Agents",
-        body: "Deploy branded website assistants that answer questions, qualify leads, collect contact information and support bookings.",
-      },
-      {
-        title: "Ongoing Optimisation",
-        body: "Monitor discoverability, improve content and maintain website and AI agent performance.",
+        title: "A clear handover",
+        body: "You receive the updated site, a report of what changed, and notes your team can use after the project.",
       },
     ],
   },
   packagesIntro: {
     eyebrow: "Packages",
-    headline: "Clear project fees. Optional monthly care.",
-    intro: "All prices are in New Zealand dollars and exclude GST. GST at 15% is shown before you pay. Choose a one-off package, then add a subscription only if you want ongoing help or a hosted assistant.",
+    headline: "Clear project fees.",
+    intro: "All prices are in New Zealand dollars and exclude GST. GST at 15% is shown before you pay.",
   },
   subscriptionsIntro: {
     eyebrow: "Monthly",
@@ -114,11 +110,9 @@ export const defaultSiteContent: SiteContent = {
       { feature: "AI-focused FAQ content", ready: "—", boost: "Included", complete: "Included" },
       { feature: "Competitor discovery analysis", ready: "—", boost: "Included", complete: "Included" },
       { feature: "Google Business Profile", ready: "—", boost: "Optimisation", complete: "Optimisation" },
-      { feature: "AI sales agent", ready: "—", boost: "Setup", complete: "Advanced configuration" },
-      { feature: "Lead capture and qualification", ready: "—", boost: "Included", complete: "Included" },
+      { feature: "Service and location pages", ready: "Review", boost: "Clearer pages", complete: "Rewritten in the redesign" },
       { feature: "Booking or CRM", ready: "—", boost: "Basic integration", complete: "Advanced integrations" },
-      { feature: "Extra approved knowledge sources", ready: "—", boost: "—", complete: "Included" },
-      { feature: "Automated lead follow-up", ready: "—", boost: "—", complete: "Setup" },
+      { feature: "Calls to action", ready: "—", boost: "Enquiry improvements", complete: "Stronger across key pages" },
       { feature: "Launch testing and handover", ready: "—", boost: "—", complete: "Included" },
     ],
   },
@@ -187,11 +181,11 @@ export const defaultSiteContent: SiteContent = {
       },
       {
         title: "We upgrade it",
-        body: "We implement the agreed improvements and configure any AI features you have chosen. You see the scope before we build it.",
+        body: "We implement the agreed improvements to structure, content, performance and the enquiry path. You see the scope before we build it.",
       },
       {
-        title: "Stay ahead",
-        body: "Choose ongoing management if you want the website, and any assistant, looked after as the tools change.",
+        title: "Handover and next steps",
+        body: "We test the changes with you, explain what was updated, and hand the site back with a clear record of the work.",
       },
     ],
   },
@@ -199,7 +193,7 @@ export const defaultSiteContent: SiteContent = {
     eyebrow: "Readiness check",
     headline: "Is your website AI ready?",
     intro:
-      "Send us your website and we will look at it. This is a request for a human review, not an instant audit and not a score.",
+      "Send us your website and we will look at it. A person reviews the request. The form does not produce a score.",
     looksAt: [
       "Whether important pages can be reached and read",
       "Whether the business, services and location are stated clearly",
@@ -207,22 +201,15 @@ export const defaultSiteContent: SiteContent = {
       "How the site behaves on a phone",
       "Where an enquiry path is missing or unclear",
     ],
-    notIncluded:
-      "You will not receive an automated score, a fabricated audit, or a claim that an AI assistant will recommend the business. If we need a paid audit to go deeper, we will say so.",
+    notIncluded: "A person reviews what you send. The form does not produce a score.",
     successTitle: "We've received your website.",
-    successBody:
-      "A person at Siboost will review what you sent and reply by email. This form does not generate an automated score or a readiness report on its own.",
+    successBody: "A person at Siboost will review what you sent and reply by email.",
   },
   faqs: [
     {
-      question: "Will this make ChatGPT or Google recommend my business?",
-      answer:
-        "No. We improve how clearly your website can be accessed and understood, and how easily a visitor can enquire. Nobody can honestly guarantee that an AI assistant will rank, recommend or mention a business.",
-    },
-    {
       question: "Has Google search stopped mattering?",
       answer:
-        "No. Many customers still search Google, browse websites and compare businesses themselves. AI assistants are an extra way people research. A useful website needs to work for both.",
+        "No. Many customers still search Google, browse websites and compare businesses themselves. AI tools are an extra way people research. A useful website needs to work for both.",
     },
     {
       question: "Are the prices inclusive of GST?",
@@ -240,11 +227,6 @@ export const defaultSiteContent: SiteContent = {
         "It is a plain text file some AI systems may request. It can summarise a business. It does not replace a crawlable website, useful content, structured data or ordinary SEO. Where it is appropriate and supported, we can add one as part of a package. It is not the whole job.",
     },
     {
-      question: "Is the chat on this website a live sales agent?",
-      answer:
-        "No. The conversation on this site is a scripted demonstration so you can see the idea. It is not connected to an AI model, and it does not save what you type as an enquiry.",
-    },
-    {
       question: "What happens to the details I submit?",
       answer:
         "We use them to reply and, if you become a customer, to deliver the work and take payment. Card numbers are handled by Stripe. We do not store them. The privacy policy explains this in more detail and is marked as a draft for legal review.",
@@ -259,8 +241,8 @@ export const defaultSiteContent: SiteContent = {
     eyebrow: "About",
     headline: "A New Zealand business, focused on the website you already have.",
     paragraphs: [
-      "Siboost helps businesses prepare their websites for the way customers search now. That means clearer pages, a site that people can use on a phone, information that AI systems can access, and, when you want it, an assistant that can take an enquiry after hours.",
-      "The company is led by Sam Naus and works with New Zealand clients. We would rather explain a limit than imply a result we cannot promise.",
+      "Siboost helps businesses prepare their websites for the way customers search now. That means clearer pages, a site that people can use on a phone, and information that AI search tools can access.",
+      "The company is led by Sam Naus and works with New Zealand clients.",
       "If your website is the main place customers learn what you do, it should say that plainly, load properly, and give people an obvious way to get in touch. That is the work.",
     ],
     audience: [
@@ -350,28 +332,28 @@ export const defaultSiteContent: SiteContent = {
       {
         heading: "The service",
         paragraphs: [
-          "Siboost upgrades existing business websites and can set up a branded website assistant. The package pages describe what is included. The work we actually do is the scope we confirm with you in writing before we start. A website redesign is limited to that agreed scope.",
-          "We do not guarantee that any search engine or AI assistant will rank, recommend, mention or send enquiries to your business. Reports and assessments describe what we observed. They are not a promise of future results.",
+          "Siboost upgrades existing business websites. The package pages describe what is included. The work we actually do is the scope we confirm with you in writing before we start. A website redesign is limited to that agreed scope.",
+          "We do not guarantee rankings, recommendations or enquiries.",
         ],
       },
       {
         heading: "Fees and GST",
         paragraphs: [
           "Package prices on this website are in New Zealand dollars and exclude GST. Where Siboost is GST-registered and GST applies, 15% GST is added and shown before payment. Confirm GST registration with an accountant before live charges are switched on.",
-          "Project fees are payable as agreed at checkout or on invoice. Monthly subscriptions renew until you cancel. Fair-use limits for SI Care and SI Agent are described on the package pages and in the product notes. Work outside those limits is quoted separately.",
+          "Project fees are payable as agreed at checkout or on invoice. Work outside the agreed scope is quoted separately.",
         ],
       },
       {
         heading: "Subscriptions",
         paragraphs: [
-          "SI Care and SI Agent are monthly subscriptions. You can manage the payment method, invoices and cancellation in the Stripe customer portal. Cancellation takes effect at the end of the current billing period unless we agree otherwise.",
+          "SI Care and SI Agent are monthly subscriptions. They renew until you cancel. Fair-use limits are described in the product notes. Work outside those limits is quoted separately. You can manage the payment method, invoices and cancellation in the Stripe customer portal. Cancellation takes effect at the end of the current billing period unless we agree otherwise.",
           "A hosted assistant needs an active SI Agent subscription. If the subscription ends, we may switch the assistant off. Setup work already delivered as part of a package remains delivered. We do not claim a named third-party agent platform is connected until that integration is in place and checked.",
         ],
       },
       {
         heading: "Your responsibilities",
         paragraphs: [
-          "You will give us accurate business information, timely access to the website, and the right to use the copy and assets you supply. You are responsible for the claims made about your own business. The assistant may only be given information you are willing for customers to hear.",
+          "You will give us accurate business information, timely access to the website, and the right to use the copy and assets you supply. You are responsible for the claims made about your own business.",
         ],
       },
       {
@@ -383,7 +365,7 @@ export const defaultSiteContent: SiteContent = {
       {
         heading: "Intellectual property",
         paragraphs: [
-          "You keep ownership of your existing website content and brand. We keep ownership of our methods, templates and tools. On payment, you receive a licence to use the deliverables for your business. Third-party software, fonts, images and agent platforms stay under their own licences.",
+          "You keep ownership of your existing website content and brand. We keep ownership of our methods, templates and tools. On payment, you receive a licence to use the deliverables for your business. Third-party software, fonts and images stay under their own licences.",
         ],
       },
       {

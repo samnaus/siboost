@@ -1,6 +1,7 @@
 import { cacheLife, cacheTag } from "next/cache"
 import { defaultCatalog, toProductCreateData, toPublicProduct, type PublicProduct } from "@/lib/catalog"
 import { prisma } from "@/lib/db"
+import { publicProducts } from "@/lib/public-site"
 
 export async function ensureSeeded() {
   const count = await prisma.product.count()
@@ -19,10 +20,10 @@ export async function getProducts(): Promise<PublicProduct[]> {
   try {
     await ensureSeeded()
     const rows = await prisma.product.findMany({ orderBy: { sortOrder: "asc" } })
-    return rows.filter((row) => row.active).map(toPublicProduct)
+    return publicProducts(rows.map(toPublicProduct))
   } catch (error) {
     console.error("[products] Using the default catalogue", error)
-    return defaultCatalog.filter((product) => product.active)
+    return publicProducts(defaultCatalog)
   }
 }
 

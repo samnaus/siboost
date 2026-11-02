@@ -4,7 +4,6 @@ import { siteUrl } from "@/lib/env"
 const paths = [
   "/",
   "/packages",
-  "/ai-sales-agents",
   "/ai-search-readiness",
   "/how-it-works",
   "/about",

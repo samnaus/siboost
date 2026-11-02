@@ -69,7 +69,7 @@ export function ReadinessForm({ content }: { content: SiteContent }) {
   )
 }
 
-export function ContactForm() {
+export function ContactForm({ includeSubscriptions = false }: { includeSubscriptions?: boolean }) {
   const [state, action, pending] = useActionState(submitEnquiry, initialActionState)
   if (state.ok) {
     return (
@@ -123,8 +123,12 @@ export function ContactForm() {
           <option value="SI Ready">SI Ready</option>
           <option value="SI Boost">SI Boost</option>
           <option value="SI Complete">SI Complete</option>
-          <option value="SI Care">SI Care</option>
-          <option value="SI Agent">SI Agent</option>
+          {includeSubscriptions ? (
+            <>
+              <option value="SI Care">SI Care</option>
+              <option value="SI Agent">SI Agent</option>
+            </>
+          ) : null}
         </select>
       </div>
       <Field id="message" label="Message" error={errors.message}>

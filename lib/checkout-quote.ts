@@ -22,8 +22,6 @@ export type CheckoutQuote = {
   bundleNote: string | null
 }
 
-const AGENT_PACKAGES = new Set(["si-boost", "si-complete"])
-
 export function quoteCheckout(
   input: { packageKey?: string | null; subscriptionKeys: string[] },
   products: PublicProduct[],
@@ -53,7 +51,11 @@ export function quoteCheckout(
   }
 
   if (lines.length === 0) {
-    return { ok: false, error: "Choose a package, a subscription, or both." }
+    const subscriptionsOffered = active.some((product) => product.kind === "subscription")
+    return {
+      ok: false,
+      error: subscriptionsOffered ? "Choose a package, a subscription, or both." : "Choose a package.",
+    }
   }
 
   const exGstCents = lines.reduce((sum, line) => sum + line.exGstCents, 0)
@@ -61,8 +63,6 @@ export function quoteCheckout(
   const recurringExGstCents = lines
     .filter((line) => line.interval === "month")
     .reduce((sum, line) => sum + line.exGstCents, 0)
-  const needsAgent = lines.some((line) => AGENT_PACKAGES.has(line.key))
-  const hasAgent = lines.some((line) => line.key === "si-agent")
   const subscriptionCount = lines.filter((line) => line.interval === "month").length
 
   return {
@@ -74,10 +74,7 @@ export function quoteCheckout(
       incGstCents: exGstCents + gstCents,
       recurringExGstCents,
       mode: lines.some((line) => line.interval === "month") ? "subscription" : "payment",
-      agentWarning:
-        needsAgent && !hasAgent
-          ? "This package includes assistant setup. The assistant does not stay online unless you add SI Agent, now or later."
-          : null,
+      agentWarning: null,
       bundleNote:
         subscriptionCount > 1
           ? "These subscriptions are billed together. Cancelling that subscription in the billing portal cancels both. Buy them in separate checkouts if you want to cancel them separately."

@@ -9,7 +9,6 @@ import { CtaLink } from "@/components/cta-link"
 
 const links = [
   { href: "/packages", label: "Packages" },
-  { href: "/ai-sales-agents", label: "AI Sales Agents" },
   { href: "/ai-search-readiness", label: "AI Search Readiness" },
   { href: "/how-it-works", label: "How It Works" },
   { href: "/about", label: "About" },

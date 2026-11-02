@@ -1,6 +1,7 @@
 import { ContactForm } from "@/components/forms"
 import { JsonLd } from "@/components/json-ld"
 import { getSiteContent } from "@/lib/content/get-content"
+import { subscriptionsEnabled } from "@/lib/env"
 import { pageMetadata } from "@/lib/seo"
 import { breadcrumbJsonLd } from "@/lib/schema"
 
@@ -34,7 +35,7 @@ export default async function ContactPage() {
             Please do not send payment card numbers or passwords. Use the checkout page for payment once Stripe is connected.
           </p>
         </div>
-        <ContactForm />
+        <ContactForm includeSubscriptions={subscriptionsEnabled()} />
       </section>
     </>
   )

@@ -6,7 +6,7 @@ import { quoteCheckout } from "@/lib/checkout-quote"
 import { chargeGst } from "@/lib/money"
 import { getAllProducts } from "@/lib/products"
 import { saveEnquiry } from "@/lib/leads"
-import { getPaymentsState, siteUrl } from "@/lib/env"
+import { getPaymentsState, siteUrl, subscriptionsEnabled } from "@/lib/env"
 import { getOrCreateGstTaxRate, getStripe } from "@/lib/stripe"
 import { isNextRedirect, limitAction, text } from "@/lib/request"
 import { checkoutSchema, fieldErrorsFromZod, type ActionState } from "@/lib/validation"
@@ -30,6 +30,10 @@ export async function startCheckout(_prev: ActionState, formData: FormData): Pro
   const limit = await limitAction("checkout")
   if (!limit.ok) {
     return { ok: false, formError: "Please wait a few minutes before trying again." }
+  }
+
+  if (!subscriptionsEnabled() && parsed.data.subscriptionKeys.some((key) => key.trim())) {
+    return { ok: false, formError: "Monthly subscriptions are not available." }
   }
 
   const products = await getAllProducts()
